@@ -15,25 +15,39 @@ import os
 import argparse
 
 # Make sure the march_madness package is importable
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from marchmadness import MarchMadnessPredictor
 
 
 def main():
     parser = argparse.ArgumentParser(description="March Madness MCMC Predictor")
-    parser.add_argument("--season",    type=int,   default=2025,
-                        help="Season year (default: 2025)")
-    parser.add_argument("--n-sims",    type=int,   default=10_000,
-                        help="Number of tournament simulations (default: 10000)")
-    parser.add_argument("--n-warmup",  type=int,   default=2000,
-                        help="MCMC warmup steps (default: 2000)")
-    parser.add_argument("--n-samples", type=int,   default=4000,
-                        help="MCMC sample steps (default: 4000)")
-    parser.add_argument("--live",      action="store_true",
-                        help="Attempt to fetch live data (requires internet)")
-    parser.add_argument("--output",    type=str,   default="march_madness_2025.png",
-                        help="Output PNG file path")
+    parser.add_argument(
+        "--season", type=int, default=2025, help="Season year (default: 2025)"
+    )
+    parser.add_argument(
+        "--n-sims",
+        type=int,
+        default=10_000,
+        help="Number of tournament simulations (default: 10000)",
+    )
+    parser.add_argument(
+        "--n-warmup", type=int, default=2000, help="MCMC warmup steps (default: 2000)"
+    )
+    parser.add_argument(
+        "--n-samples", type=int, default=4000, help="MCMC sample steps (default: 4000)"
+    )
+    parser.add_argument(
+        "--live",
+        action="store_true",
+        help="Attempt to fetch live data (requires internet)",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="march_madness_2025.png",
+        help="Output PNG file path",
+    )
     args = parser.parse_args()
 
     print("=" * 60)
@@ -48,15 +62,25 @@ def main():
 
     # ── 2. MCMC ──────────────────────────────────────────────────────────
     predictor.fit_mcmc(
-        n_warmup  = args.n_warmup,
-        n_samples = args.n_samples,
+        n_warmup=args.n_warmup,
+        n_samples=args.n_samples,
     )
 
     # Show posterior summary
     print("\n[Posterior Strength Rankings — Top 12]")
     ps = predictor.posterior_summary().head(12)
-    print(ps[["strength_rank","team","alpha_mean","alpha_std","alpha_p5","alpha_p95"]]
-          .to_string(index=False))
+    print(
+        ps[
+            [
+                "strength_rank",
+                "team",
+                "alpha_mean",
+                "alpha_std",
+                "alpha_p5",
+                "alpha_p95",
+            ]
+        ].to_string(index=False)
+    )
 
     # ── 3. Tournament simulation ──────────────────────────────────────────
     sim_results = predictor.run_tournament_simulation(n_simulations=args.n_sims)
@@ -67,11 +91,11 @@ def main():
     # ── 5. Sample matchup queries ─────────────────────────────────────────
     print("\n[Head-to-Head Win Probabilities — Sample Matchups]")
     sample_matchups = [
-        ("Auburn",   "Duke"),
-        ("Houston",  "Florida"),
-        ("Duke",     "Michigan St"),
-        ("Tennessee","Kentucky"),
-        ("Gonzaga",  "UConn"),
+        ("Auburn", "Duke"),
+        ("Houston", "Florida"),
+        ("Duke", "Michigan St"),
+        ("Tennessee", "Kentucky"),
+        ("Gonzaga", "UConn"),
     ]
     for ta, tb in sample_matchups:
         try:
