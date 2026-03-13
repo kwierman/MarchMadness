@@ -16,6 +16,14 @@ from .predictor import MarchMadnessPredictor
 from .models.mcmc import MCMCModel
 from .data.scraper import DataScraper
 from .analysis.visualizer import TournamentVisualizer
+from .config import Config, get_config
 
 __version__ = "1.0.0"
-__all__ = ["MarchMadnessPredictor", "MCMCModel", "DataScraper", "TournamentVisualizer"]
+__all__ = [
+    "MarchMadnessPredictor",
+    "MCMCModel",
+    "DataScraper",
+    "TournamentVisualizer",
+    "Config",
+    "get_config",
+]
