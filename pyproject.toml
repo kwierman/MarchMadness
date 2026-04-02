@@ -1,0 +1,54 @@
+[project]
+name = "marchmadness"
+version = "0.1.0"
+description = "March Madness MCMC prediction pipeline"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "matplotlib",
+    "requests",
+    "beautifulsoup4",
+    "pyyaml",
+    "typer",
+    "rich",
+]
+
+[project.scripts]
+marchmadness = "marchmadness.cli:app"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=src --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["tests/*", "*/run_prediction.py", "*/visualizer.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+omit = ["tests/*", "*/run_prediction.py", "*/visualizer.py"]

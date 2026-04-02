@@ -1,0 +1,46 @@
+# March Madness Predictor Configuration
+# This file configures data sources, model parameters, and logging
+
+# Default season year
+season: 2025
+
+# Data source configuration
+data:
+  # URLs for data fetching
+  sports_reference_url: "https://www.sports-reference.com/cbb"
+  espn_api_url: "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball"
+  
+  # Cache settings
+  cache_dir: ".mm_cache"
+  use_cache: true
+  offline_fallback: true
+  timeout_seconds: 15
+
+# Model parameters
+model:
+  # MCMC settings
+  mcmc_warmup: 2000
+  mcmc_samples: 4000
+  mcmc_step_size: 0.08
+  mcmc_seed: 0
+  
+  # Simulation settings
+  n_simulations: 10000
+  
+  # Output paths
+  output_dir: "output"
+  model_save_path: null  # Set to a path to save trained models
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null  # Set to a path to log to file
+  console: true
+
+# Visualization settings
+visualizer:
+  dpi: 150
+  figure_size: [22, 26]
+  theme: "default"
+  output_format: "png"
